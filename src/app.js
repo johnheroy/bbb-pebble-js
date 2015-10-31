@@ -17,16 +17,19 @@ var locationOptions = {
   timeout: 10000
 };
 
+navigator.geolocation.getCurrentPosition(function(position) {
+  console.log(JSON.stringify(position));
+  
+});
+
 function loadStops() {
   navigator.geolocation.getCurrentPosition(function(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
     console.log('lat', lat, 'lon', lon);
-    console.log(lon);
     ajax({
-      url: 'http://bbb-api.cloudapp.net/api/arrivals',
+      url: 'http://bbb-api.cloudapp.net/api/arrivals?lat=' + lat + '&lon=' + lon,
       method: 'GET',
-      data: {lat: lat, lon: lon},
       type: 'json'
     },
     function(data, status, request) {
